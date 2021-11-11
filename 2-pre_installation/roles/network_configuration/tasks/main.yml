@@ -1,0 +1,79 @@
+---
+- name: preparing template file for promiscuous mode on network interface
+  template: src=promisc_service.j2 dest=/lib/systemd/system/promisc.service
+  when: "'compute' in group_names or 'network' in group_names"
+
+- name: Create a symbolic link for promisc mode
+  ansible.builtin.file:
+    dest: /etc/systemd/system/promisc.service
+    src: /lib/systemd/system/promisc.service
+    state: link
+  notify:
+    - reload systemd
+  when: "'compute' in group_names or 'network' in group_names"
+
+- name: Preparation netplan config file in compute nodes
+  template: src=01-netcfg_compute.j2 dest=/etc/netplan/01-netcfg.yaml
+  notify:
+    - netplan_apply
+  when: "'compute' in group_names"
+
+- name: Preparation netplan config file in network nodes
+  template: src=01-netcfg_network.j2 dest=/etc/netplan/01-netcfg.yaml
+  notify:
+    - netplan_apply
+  when: "'network' in group_names"
+
+- name: Preparation netplan config file in controller nodes
+  template: src=01-netcfg_controller.j2 dest=/etc/netplan/01-netcfg.yaml
+  notify:
+    - netplan_apply
+  when: "'control' in group_names"
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+
+- name: createse br-int bridge
+  openvswitch.openvswitch.openvswitch_bridge:
+    bridge: "{{ integral_bridge }}"
+    state: present
+
+- name: createse br-eth1 bridge
+  openvswitch.openvswitch.openvswitch_bridge:
+    bridge: "{{ network_bridge }}"
+    state: present
+  when: "'compute' in group_names or 'network' in group_names"
+
+- name: Creates port network on bridge br-eth1
+  openvswitch.openvswitch.openvswitch_port:
+    bridge: "{{ network_bridge }}"
+    port: "{{ network_bridge_port }}"
+    state: present
+  when: "'compute' in group_names or 'network' in group_names"
+
+- name: creates "{{ item.br_name }}" bridge
+  openvswitch.openvswitch.openvswitch_bridge:
+    bridge: "{{ item.br_name }}"
+    state: present
+  with_items: "{{ ext_bridges_for_network }}"
+  when: "'network' in group_names"
+
+- name: Creates port network on bridge "{{ item.br_name }}"
+  openvswitch.openvswitch.openvswitch_port:
+    bridge: "{{ item.br_name }}"
+    port: "{{ item.if_name }}"
+    tag: "{{ item.vlan_id }}"
+    state: present
+  with_items: "{{ ext_bridges_for_network }}"
+  when: "'network' in group_names"
+
+- name: Mount NFS volumes permanently
+  ansible.posix.mount:
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    opts: "{{ item.opts }}"
+    boot: no
+    state: mounted
+    fstype: nfs
+  with_items: "{{ nfs_shares }}"
+  when: "'compute' in group_names or 'control' in group_names"

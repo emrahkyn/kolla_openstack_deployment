@@ -1,0 +1,48 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - create_user
+    - preparation_for_installation  
+    - network_configuration  
+  vars:
+    users:
+    - username: "erdem"
+      groups: "sudo"
+    - username: "emrah"
+      groups: "sudo"
+    - username: "onur"
+      groups: "sudo"
+    remove_users:
+    - "omer"
+    interfaces:
+    - type: "management"
+      name: "eno1"
+    - type: "network"
+      name: "ens1f0"
+    - type: "storage"
+      name: "ens1f1"
+    - type: "ext_net1"
+      name: "ens1f1"
+    vlans:
+    - type: "storage"
+      id: "999"
+    - type: "ext_net1"
+      id: "93"
+    linux_utility_packages:
+     - "ethtool"
+     - "net-tools"
+     - "htop"
+     - "openvswitch-switch"
+     - "nfs-common"
+    integral_bridge: br-int
+    network_bridge: br-eth1
+    network_bridge_port: ens1f0
+    ext_bridges_for_network:
+     - br_name: br-ex
+       if_name: vlan.93
+       vlan_id: 93
+    nfs_shares:
+     - src: 10.0.98.1:/export/openstack-elasticsearch
+       path: /var/lib/nova/instances
+       opts: vers=3,rsize=1048576,wsize=1048576,hard,proto=tcp,timeo=600,sec=sys,noatime,nodiratime,nolock,_netdev

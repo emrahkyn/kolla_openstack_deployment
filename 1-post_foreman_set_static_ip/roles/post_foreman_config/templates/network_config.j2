@@ -1,0 +1,14 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    {% for interface in interfaces if interface.type == "management" %}{{ interface.name }}: {% endfor %}
+
+     dhcp4: no
+     addresses: [172.16.2.{{ inventory_hostname | regex_replace('[^0-9]','') }}/16]
+     gateway4: 172.16.0.1
+     nameservers:
+       addresses: [8.8.8.8]
+       search: [ulakbim.gov.tr]

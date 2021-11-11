@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - post_foreman_config
+  vars:
+    interfaces:
+    - type: "management"
+      name: "eno1"

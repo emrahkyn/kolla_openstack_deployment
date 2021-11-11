@@ -1,0 +1,25 @@
+# This file describes the network interfaces available on your system
+# For more information, see netplan(5).
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    {% for interface in interfaces if interface.type == "management" %}{{ interface.name }}: {% endfor %}
+
+     dhcp4: no
+     addresses: [{{ ansible_ssh_host }}/16]
+     gateway4: 172.16.0.1
+     nameservers:
+       addresses: [8.8.8.8]
+       search: [ulakbim.gov.tr]
+    {% for interface in interfaces if interface.type == "storage" %}{{ interface.name }}: {} {% endfor %}
+
+    {% for interface in interfaces if interface.type == "network" %}{{ interface.name }}: {} {% endfor %}    
+  vlans:
+    {% for vlan in vlans if vlan.type == "storage" %}vlan.{{ vlan.id }}:
+      id: {{ vlan.id }}
+      link: {% for interface in interfaces if interface.type == "storage" %}{{ interface.name }}{% endfor %}
+
+      dhcp4: no
+      addresses: [10.0.98.{{ ansible_ssh_host.split('.')[3:4] | join('.') }}/23]
+      mtu: 9000 {% endfor %}

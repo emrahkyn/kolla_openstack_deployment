@@ -1,0 +1,10 @@
+OPENSTACK_API_VERSIONS = {
+    "identity": 3,
+    "volume": 3,
+}
+
+LAUNCH_INSTANCE_DEFAULTS = {
+      'create_volume' : False
+}
+
+

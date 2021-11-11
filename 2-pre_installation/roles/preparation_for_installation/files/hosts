@@ -1,0 +1,70 @@
+127.0.0.1       localhost
+172.16.2.110    controller-prod.ulakbim.gov.tr  controller-prod
+172.16.2.111    neutron-prod.ulakbim.gov.tr     neutron-prod
+172.16.2.112    baklava112.ulakbim.gov.tr       baklava112
+172.16.2.113    baklava113.ulakbim.gov.tr       baklava113
+172.16.2.114    baklava114.ulakbim.gov.tr       baklava114
+172.16.2.115    baklava115.ulakbim.gov.tr       baklava115
+172.16.2.116    baklava116.ulakbim.gov.tr       baklava116
+172.16.2.117    baklava117.ulakbim.gov.tr       baklava117
+172.16.2.118    baklava118.ulakbim.gov.tr       baklava118
+172.16.2.119    baklava119.ulakbim.gov.tr       baklava119
+172.16.2.120    baklava120.ulakbim.gov.tr       baklava120
+172.16.2.121    baklava121.ulakbim.gov.tr       baklava121
+172.16.2.122    baklava122.ulakbim.gov.tr       baklava122
+172.16.2.123    baklava123.ulakbim.gov.tr       baklava123
+172.16.2.124    baklava124.ulakbim.gov.tr       baklava124
+172.16.2.125    baklava125.ulakbim.gov.tr       baklava125
+172.16.2.126    baklava126.ulakbim.gov.tr       baklava126
+172.16.2.127    baklava127.ulakbim.gov.tr       baklava127
+172.16.2.128    baklava128.ulakbim.gov.tr       baklava128
+172.16.2.129    baklava129.ulakbim.gov.tr       baklava129
+
+172.16.2.190    baklava190.ulakbim.gov.tr       baklava190
+
+172.16.2.220    kefir220.ulakbim.gov.tr         kefir220
+172.16.2.221    kefir221.ulakbim.gov.tr         kefir221
+172.16.2.222    kefir222.ulakbim.gov.tr         kefir222
+172.16.2.223    kefir223.ulakbim.gov.tr         kefir223
+172.16.2.224    kefir224.ulakbim.gov.tr         kefir224
+172.16.2.225    kefir225.ulakbim.gov.tr         kefir225
+172.16.2.226    kefir226.ulakbim.gov.tr         kefir226
+172.16.2.227    kefir227.ulakbim.gov.tr         kefir227
+172.16.2.228    kefir228.ulakbim.gov.tr         kefir228
+172.16.2.229    kefir229.ulakbim.gov.tr         kefir229
+172.16.2.230    kefir230.ulakbim.gov.tr         kefir230
+172.16.2.231    kefir231.ulakbim.gov.tr         kefir231
+172.16.2.232    kefir232.ulakbim.gov.tr         kefir232
+172.16.2.233    kefir233.ulakbim.gov.tr         kefir233
+172.16.2.234    kefir234.ulakbim.gov.tr         kefir234
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.16.2.208    zula208.ulakbim.gov.tr          zula208
+172.16.2.207    zula207.ulakbim.gov.tr          zula207
+172.16.2.206    zula206.ulakbim.gov.tr          zula206
+172.16.2.205    zula205.ulakbim.gov.tr          zula205
+
+
+172.16.2.51     ayran51.ulakbim.gov.tr          ayran51
+172.16.2.52     ayran52.ulakbim.gov.tr          ayran52
+172.16.2.53     ayran53.ulakbim.gov.tr          ayran53
+172.16.2.54     ayran54.ulakbim.gov.tr          ayran54
+172.16.2.55     ayran55.ulakbim.gov.tr          ayran55
+172.16.2.56     ayran56.ulakbim.gov.tr          ayran56
+172.16.2.57     ayran57.ulakbim.gov.tr          ayran57
+172.16.2.58     ayran58.ulakbim.gov.tr          ayran58
+172.16.2.59     ayran59.ulakbim.gov.tr          ayran59
+172.16.2.60     ayran60.ulakbim.gov.tr          ayran60
+172.16.2.61     ayran61.ulakbim.gov.tr          ayran61
+172.16.2.62     ayran62.ulakbim.gov.tr          ayran62
+172.16.2.63     ayran63.ulakbim.gov.tr          ayran63
+
+
+172.16.2.64     ayran64.ulakbim.gov.tr          ayran64
+172.16.2.65     ayran65.ulakbim.gov.tr          ayran65
+172.16.2.66     ayran66.ulakbim.gov.tr          ayran66
+172.16.2.67     ayran67.ulakbim.gov.tr          ayran67
+172.16.2.68     ayran68.ulakbim.gov.tr          ayran68

@@ -1,0 +1,55 @@
+---
+  - name: "Create user accounts"
+    user:
+      name: "{{ item.username }}"
+      groups: "{{ item.groups }}"
+      shell: "/bin/bash"
+      state: "present"
+    with_items: "{{ users }}"
+    tags:
+      - create_user      
+  - name: "Remove old user accounts in remove_users"
+    user:
+      name: "{{ item }}"
+      state: "absent"
+    with_items: "{{ remove_users }}"
+    tags:
+      - delete_user      
+  - name: "Add authorized keys"
+    authorized_key:
+      user: "{{ item.username }}"
+      key: "{{ lookup('file', '../files/'+ item.username + '.pub') }}"
+    with_items: "{{ users }}"
+    tags:
+      - add_authorized_keys      
+  - name: "Allow admin users to sudo without a password"
+    lineinfile:
+      dest: "/etc/sudoers" # path: in version 2.3
+      state: "present"
+      regexp: "^%sudo"
+      line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    tags:
+      - give_sudo_rights      
+  - name: "Disable Password Authentication"
+    lineinfile:
+      dest: "/etc/ssh/sshd_config"
+      regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+      state: "present"
+      backup: "yes"
+    tags:
+      - disable_paswd_authentication     
+  - name: "Disable root login via SSH"
+    lineinfile:
+      dest: "/etc/ssh/sshd_config"
+      regexp: "^PermitRootLogin"
+      line: "PermitRootLogin no"
+    notify: "Restart sshd"
+    tags:
+      - disable_ssh_root_login     
+  - name: "Delete root ssh pubkey for keyless authentication"
+    file:
+      state: "absent"
+      path: "/root/.ssh/authorized_keys"
+    tags:
+      - delete_root_authorized_keys     
