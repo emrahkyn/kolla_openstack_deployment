@@ -1,4 +1,4 @@
-# kolla_openstack_deployment
+# kolla openstack multi-node deployment
 This is a repository which covers all required steps for a standalone operating system (Ubuntu 20.04) to deploy core openstack services using kolla-ansible multi-node deployment
 
 It has 3 main parts such as 1-post_foreman_set_static_ip,  2-pre_installation and 3-kolla-ansible-deployment. 
