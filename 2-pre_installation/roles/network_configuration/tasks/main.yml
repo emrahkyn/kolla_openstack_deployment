@@ -1,7 +1,11 @@
 ---
-- name: preparing template file for promiscuous mode on network interface
-  template: src=promisc_service.j2 dest=/lib/systemd/system/promisc.service
-  when: "'compute' in group_names or 'network' in group_names"
+- name: preparing template file for promiscuous mode on compute nodes
+  template: src=promisc_service_compute.j2 dest=/lib/systemd/system/promisc.service
+  when: "'compute' in group_names"
+
+- name: preparing template file for promiscuous mode on neutron node
+  template: src=promisc_service_network.j2 dest=/lib/systemd/system/promisc.service
+  when: "'network' in group_names"
 
 - name: Create a symbolic link for promisc mode
   ansible.builtin.file:
@@ -9,7 +13,7 @@
     src: /lib/systemd/system/promisc.service
     state: link
   notify:
-    - reload systemd
+    - reload_systemd
   when: "'compute' in group_names or 'network' in group_names"
 
 - name: Preparation netplan config file in compute nodes
@@ -37,11 +41,13 @@
   openvswitch.openvswitch.openvswitch_bridge:
     bridge: "{{ integral_bridge }}"
     state: present
+    fail_mode: secure
 
 - name: createse br-eth1 bridge
   openvswitch.openvswitch.openvswitch_bridge:
     bridge: "{{ network_bridge }}"
     state: present
+    fail_mode: secure
   when: "'compute' in group_names or 'network' in group_names"
 
 - name: Creates port network on bridge br-eth1
@@ -55,6 +61,7 @@
   openvswitch.openvswitch.openvswitch_bridge:
     bridge: "{{ item.br_name }}"
     state: present
+    fail_mode: secure
   with_items: "{{ ext_bridges_for_network }}"
   when: "'network' in group_names"
 
