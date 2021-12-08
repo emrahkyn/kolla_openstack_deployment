@@ -1,0 +1,15 @@
+[Unit]
+Description=Bring up an interface in promiscuous mode during boot
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ip link set dev {% for interface in interfaces if interface.type == "network" %}{{ interface.name }}{% endfor %} promisc on
+ExecStart=/usr/sbin/ip link set dev {% for interface in interfaces if interface.type == "ext_net1" %}{{ interface.name }}{% endfor %} promisc on
+ExecStart=/usr/sbin/ip link set dev {% for interface in interfaces if interface.type == "ext_net2" %}{{ interface.name }}{% endfor %} promisc on
+ExecStart=/usr/sbin/ip link set dev {% for interface in interfaces if interface.type == "ext_net3" %}{{ interface.name }}{% endfor %} promisc on
+TimeoutStartSec=0
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
