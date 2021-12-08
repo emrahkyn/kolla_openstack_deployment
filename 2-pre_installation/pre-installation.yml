@@ -24,11 +24,21 @@
       name: "ens1f1"
     - type: "ext_net1"
       name: "ens1f1"
+    - type: "ext_net2"
+      name: "ens2f0"
+    - type: "ext_net3"
+      name: "ens2f1"
     vlans:
     - type: "storage"
       id: "999"
     - type: "ext_net1"
       id: "93"
+    - type: "ext_net1"
+      id: "83"
+    - type: "ext_net2"
+      id: "85"
+    - type: "ext_net3"
+      id: "811"
     linux_utility_packages:
      - "ethtool"
      - "net-tools"
@@ -42,6 +52,15 @@
      - br_name: br-ex
        if_name: vlan.93
        vlan_id: 93
+     - br_name: br-ex
+       if_name: vlan.83
+       vlan_id: 83
+     - br_name: br-ex2
+       if_name: vlan.85
+       vlan_id: 1002
+     - br_name: br-ex3
+       if_name: vlan.811
+       vlan_id: 811
     nfs_shares:
      - src: 10.0.98.1:/export/openstack-elasticsearch
        path: /var/lib/nova/instances
