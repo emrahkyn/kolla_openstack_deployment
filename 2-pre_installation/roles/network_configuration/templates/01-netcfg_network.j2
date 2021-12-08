@@ -14,11 +14,30 @@ network:
        search: [ulakbim.gov.tr]
     {% for interface in interfaces if interface.type == "ext_net1" %}{{ interface.name }}: {} {% endfor %}
 
+    {% for interface in interfaces if interface.type == "ext_net2" %}{{ interface.name }}: {} {% endfor %}
+
+    {% for interface in interfaces if interface.type == "ext_net3" %}{{ interface.name }}: {} {% endfor %}
+
     {% for interface in interfaces if interface.type == "network" %}{{ interface.name }}: {} {% endfor %}    
   vlans:
     {% for vlan in vlans if vlan.type == "ext_net1" %}vlan.{{ vlan.id }}:
       id: {{ vlan.id }}
       link: {% for interface in interfaces if interface.type == "ext_net1" %}{{ interface.name }}{% endfor %}
+
+      dhcp4: no
+      mtu: 9000
+    {% endfor %}
+
+    {% for vlan in vlans if vlan.type == "ext_net2" %}vlan.{{ vlan.id }}:
+      id: {{ vlan.id }}
+      link: {% for interface in interfaces if interface.type == "ext_net2" %}{{ interface.name }}{% endfor %}
+
+      dhcp4: no
+      mtu: 9000{% endfor %}
+
+    {% for vlan in vlans if vlan.type == "ext_net3" %}vlan.{{ vlan.id }}:
+      id: {{ vlan.id }}
+      link: {% for interface in interfaces if interface.type == "ext_net3" %}{{ interface.name }}{% endfor %}
 
       dhcp4: no
       mtu: 9000{% endfor %}
